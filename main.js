@@ -2,7 +2,31 @@
 Code by Berbi G
 */
 function no8(x) {
-    console.log(x);
+    // console.log(x);
+}
+function getQueryVariable(v) {
+    var query = window.location.search.substring(1);
+    var vars = query.split("&");
+    for (var i=0;i<vars.length;i++) {
+        var pair = vars[i].split("=");
+        if(pair[0] == v){return pair[1];}
+    }
+    return 0;
+}
+function addText(text) {
+    if(hd) text = ++lineid + ". "+ text;
+    hd=false;
+    var outputArea = document.getElementById("textArea");
+    outputArea.innerHTML += text;
+}
+function newLine() {
+    var outputArea = document.getElementById("textArea");
+    outputArea.innerText += "\n";
+    hd=true;
+}
+function playSound(path) {
+    var audio = new Audio(path);
+    audio.play();
 }
 function I(x) {
     return st+x*sp;
@@ -95,10 +119,37 @@ function fly(T,C,a,b,ld,f=false) {//搜索
         if(cnt+(edd!=ld)>3) {
             chk=true;
             if(o==0) {
-                if(din==3&&DIs[0]%2!=DIs[1]%2) chk=false;
-                // for(var i=0;i<DIs.length;i++) {
-                //     DIs[i]
-                // }
+                var en=din+1;//边数
+                if(banShape==1&&en===4&&DIs[0]%2!==DIs[1]%2) chk=false;//平四
+                if(banShape==2&&en===4&&DIs[0]%2===0&&DIs[1]%2===0) chk=false;//小正方
+                if(banShape==3&&en===4&&DIs[0]%2===1&&DIs[1]%2===1) chk=false;//大正方
+                if(banShape==-1&&en===bann) {
+                    DIs[din]=edd;
+                    for(var r=0;r<en;r++) {
+                        var f=true;
+                        for(var i=0;i<din;i++)
+                        if(DIs[i]!=banDI[(i+r)%en]) {
+                            f=false;
+                            break;
+                        }
+                        if(f) {
+                            chk=false;
+                            break;
+                        }
+                    }
+                    for(var r=0;r<en;r++) {
+                        var f=true;
+                        for(var i=0;i<din;i++)
+                        if(DIs[i]!=banDI[(r-i+en)%en]) {
+                            f=false;
+                            break;
+                        }
+                        if(f) {
+                            chk=false;
+                            break;
+                        }
+                    }
+                }
             }
         }
     }
@@ -185,7 +236,8 @@ function update() {
     disp();
     if(gameover) {
         if(!showresult) {
-            alert(o?"blue wins":"red wins");
+            playSound("game-end.webm");
+            alert(o?"后手胜":"先手胜");
             showresult=true;
         }
         return;
@@ -194,6 +246,8 @@ function update() {
         if(!o) {
             if(choi>=0&&xx0==-1&&J(choi,choj)!=xz1) {
                 xx0=choi,xy0=choj;
+                addText("X("+choi+","+choj+") ");
+                //playSound(".mep4");
                 xz0=J(xx0,xy0);
                 choi=choj=-1;
                 fiachx();
@@ -206,6 +260,7 @@ function update() {
         else {
             if(choi>=0&&xx1==-1&&J(choi,choj)!=xz0) {
                 xx1=choi,xy1=choj;
+                addText("X("+choi+","+choj+") ");
                 xz1=J(xx1,xy1);
                 choi=choj=-1;
                 fiachx();
@@ -246,6 +301,10 @@ function update() {
                     // no8(C0);
                     choi=choj=-1;
                     mvs[mv++]=[a,b,c,d];
+                    playSound("move-self.webm");
+                    // if(!o) addText((mv+1)/2+".    ");
+                    addText("("+a+","+b+")-("+c+","+d+")    ");
+                    if(o) newLine();
                     if(theend) {
                         gameover=true;
                         disp();
@@ -294,8 +353,34 @@ function ckey(e) {
 }
 function clicked() {
     cro=true;
-    // var button = document.getElementById("crobutton");
-    // button.classList.toggle("clicked");
+}
+function init() {
+    var outputArea = document.getElementById("textArea");
+    outputArea.innerHTML = '';
+    mx=my=0;
+    choi=choj=-1;
+    mv=0;
+    theend=false;
+    gameover=false;
+    showresult=false;
+    xx0=xy0=xx1=xy1=xz0=xz1=-1;
+    o=0;//是否先手走
+    cro=false;
+    j0=j1=2;
+    din=0;
+    lineid=0;
+    hd=true;
+    for(var i=0;i<C0.length;i++) C0[i]=C1[i]=i;
+    T0=Array.from(Array(25),()=>new Array(8).fill(false));
+    T1=Array.from(Array(25),()=>new Array(8).fill(false));
+    JL=Array.from(Array(72),()=>new Array);
+    JN=[];
+    V=new Array(25).fill(false);
+    B=new Array(16).fill(false);
+    mvs=new Array(80);
+    DIs=new Array(80);
+    banShape=getQueryVariable("ban");
+    no8(banShape);
 }
 window.onload=() => {
     CA=document.getElementById('wgzcanvas');
@@ -308,19 +393,9 @@ window.onload=() => {
     ra=sz/80;//点半径
     st=sz/2-sp*((n-1)/2);//起始坐标
     co0='#E05050',co1='#5050E0',co2='#885088';//先后手颜色
-    mx=my=0;
-    choi=choj=-1;
-    mv=0;
-    theend=false;
-    gameover=false;
-    showresult=false;
     dx=[0,1,1,1,0,-1,-1,-1];
     dy=[1,1,0,-1,-1,-1,0,1];
-    xx0=xy0=xx1=xy1=xz0=xz1=-1;
-    T0=Array.from(Array(25),()=>new Array(8).fill(false));
-    T1=Array.from(Array(25),()=>new Array(8).fill(false));
     EID=Array.from(Array(25),()=>new Array(8));
-    JL=Array.from(Array(72),()=>new Array);
     var e=0;
     for(var i=0;i<n;i++) for(var j=0;j<n;j++) {
         for(var d=0;d<4;d++) {
@@ -332,16 +407,7 @@ window.onload=() => {
     }
     C0=new Array(25);
     C1=new Array(25);
-    JN=[];
-    for(var i=0;i<C0.length;i++) C0[i]=C1[i]=i;
-    V=new Array(25).fill(false);
-    B=new Array(16).fill(false);
-    j0=j1=2;
-    mvs=new Array(80);
-    DIs=new Array(80);
-    din=0;
-    o=0;//是否先手走
-    cro=false;
+    init();
     setInterval(update,1000/fps);
     document.addEventListener('keydown',ckey);
     CA.addEventListener('click',ccli);
