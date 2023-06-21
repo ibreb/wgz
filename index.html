@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>ibreb.github.io</title>
+  <title>Home</title>
   <style>
     #menu {
       width: 300px;
@@ -23,8 +23,15 @@
 </head>
 <body>
   <div id="menu">
-    <h1>WGZ</h1>
-    <button onclick="window.location.href='wgz.html'">Start Game</button>
+    <h1>WGZ棋</h1>
+    禁用图形
+    <select id="banShape" name="ban">
+        <option value="0">不禁用</option>
+        <option value="1">小平行四边形</option>
+        <option value="2">小正方形</option>
+        <option value="3">大正方形</option>
+    </select><br>
+    <button onclick="window.location.href='wgz.html?ban='+document.getElementById('banShape').value">开始</button>
   </div>
 
   <script>
