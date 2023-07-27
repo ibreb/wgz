@@ -1,1 +1,1 @@
-# ibreb.github.io
+WGZ棋单机对局
