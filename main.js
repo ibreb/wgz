@@ -38,33 +38,65 @@ function rec(x,y,a,b,co) {
     CC.fillStyle=co;
     CC.fillRect(x,y,a,b);
 }
-function cir(x,y,r=ra,co='black') {
+function cir(x,y,r=ra,co='black',sh=false) {
     CC.fillStyle=co;
+    if(sh) {
+        CC.shadowColor=co;
+        CC.shadowBlur=20;
+    }
     CC.beginPath();
     CC.arc(x,y,r,0,2*Math.PI);
     CC.fill();
     CC.closePath();
+    CC.shadowColor='transparent';
+    CC.shadowBlur=0;
 }
 function line(a,b,x,y,co,w=8) {
     CC.strokeStyle=co;
     CC.lineWidth=w;
+    CC.shadowColor=co;
+    CC.shadowBlur=10;
     CC.beginPath();
     CC.moveTo(a,b);
     CC.lineTo(x,y);
     CC.stroke();
     CC.closePath();
+    CC.shadowColor='transparent';
+    CC.shadowBlur=0;
 }
 function dash(a,b,x,y,co,w=8) {
     CC.setLineDash([5,15]);
     line(a,b,x,y,co,w);
     CC.setLineDash([]);
 }
+// function drawGlowingLine() {
+//   CC.clearRect(0, 0, CA.width, CA.height);
+  
+//   // Set the glow color and blur
+//   CC.shadowColor = 'cyan';
+//   CC.shadowBlur = 10;
+  
+//   // Draw the line
+//   CC.beginPath();
+//   CC.moveTo(50, 100);
+//   CC.lineTo(350, 100);
+//   CC.lineWidth = 5;
+//   CC.strokeStyle = 'cyan';
+//   CC.stroke();
+  
+//   // Reset shadow properties
+//   CC.shadowColor = 'transparent';
+//   CC.shadowBlur = 0;
+  
+//   // Animate the line
+//   requestAnimationFrame(drawGlowingLine);
+// }
 function disp() {
-    rec(0,0,640,640,'#B0F0B0');
+    rec(0,0,640,640,'#E0E0E0');
 //    line(I(1),I(2),I(2),I(3),co0);
 //    line(I(1),I(3),I(2),I(2),co0);
     if(choi>=0) {
-        cir(I(choi),I(choj),ra*2,'lime');
+        cir(I(choi),I(choj),ra*2,'lime',true);
     }
     var c=0;
     for(var i=0;i<mv;i++) {
@@ -411,8 +443,25 @@ window.onload=() => {
     setInterval(update,1000/fps);
     document.addEventListener('keydown',ckey);
     CA.addEventListener('click',ccli);
+    // drawGlowingLine();debugger;
 }
 /*
 TODO:
 
 */
+
+function exportCanvasAsImage(fileName) {
+  // Create a new Image object
+  const img = new Image();
+
+  // Set the image source to the data URL of the canvas
+  img.src = CA.toDataURL('image/png');
+
+  // Create a link to download the image
+  const link = document.createElement('a');
+  link.href = img.src;
+  link.download = fileName+'.png';
+
+  // Simulate a click on the link to trigger the download
+  link.click();
+}

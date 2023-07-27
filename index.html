@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
+<meta charset="UTF-8">
 <head>
-  <title>Home</title>
+  <title>WGZ棋</title>
   <style>
     #menu {
       width: 300px;
@@ -10,14 +11,44 @@
     }
 
     #menu h1 {
-      font-size: 32px;
+      font-size: 64px;
       margin-bottom: 30px;
+/*      font-family: Quicksand-Bold,serif;*/
+/*      font-size: 72px;*/
+/*      margin-top: 0;*/
+/*      margin-bottom: 5px;*/
+/*      text-align: center;*/
+      
+      text-shadow: 2px 2px teal;
+/*      transition: all .2s ease-in-out;*/
+/*      position: relative;*/
+/*      display: inline-block;*/
     }
 
-    #menu button {
+    /*#menu button {
       padding: 10px 20px;
       font-size: 24px;
       margin: 10px;
+    }*/
+    button {
+      padding: 10px 20px;
+      font-size: 20px;
+      margin: 10px;
+      width: 100px;
+      border: none;
+      background-color: #ddd;
+      color: black;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    button:hover {
+      background-color: #bbb;
+    }
+    body {
+      background-color: #222;
+      color: white;
     }
   </style>
 </head>
@@ -32,9 +63,8 @@
         <option value="3">大正方形</option>
     </select><br>
     <button onclick="window.location.href='wgz.html?ban='+document.getElementById('banShape').value">开始</button>
+    <br>
+    <button onclick="window.location.href='rule.html'">规则</button>
   </div>
-
-  <script>
-  </script>
 </body>
 </html>
