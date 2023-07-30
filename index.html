@@ -4,6 +4,12 @@
 <head>
   <title>WGZ棋</title>
   <style>
+    body {
+      font-size: 17px;
+    }
+    #menu select {
+      font-size: 17px;
+    }
     #menu {
       width: 300px;
       text-align: center;
@@ -57,12 +63,20 @@
     <h1>WGZ棋</h1>
     禁用图形
     <select id="banShape" name="ban">
-        <option value="0">不禁用</option>
         <option value="1">小平行四边形</option>
         <option value="2">小正方形</option>
         <option value="3">大正方形</option>
+        <option value="0">不禁用</option>
     </select><br>
-    <button onclick="window.location.href='wgz.html?ban='+document.getElementById('banShape').value">开始</button>
+
+    对局模式
+    <select id="opp" name="mode">
+        <option value="0">单机对局</option>
+        <option value="1">人机对局一级</option>
+        <option value="2">人机对局二级</option>
+    </select><br>
+
+    <button onclick="window.location.href='wgz.html?ban='+document.getElementById('banShape').value+'&mode='+document.getElementById('opp').value">开始</button>
     <br>
     <button onclick="window.location.href='rule.html'">规则</button>
   </div>
