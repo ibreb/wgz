@@ -2,7 +2,7 @@
 Code by Berbi G
 */
 function no8(x) {
-    // console.log(x);
+    console.log(x);
 }
 function assert(x,info) {
     if(!x) {
@@ -12,7 +12,6 @@ function assert(x,info) {
     }
 }
 function randint(min, max) {
-    // return min;
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 function getQueryVariable(v) {
@@ -91,10 +90,10 @@ function disp() {
         if(c==1) co=co1;
         c=1-c;
 //        if(i==mv-1) line(I(mvs[i][0]),I(mvs[i][1]),I(mvs[i][2]),I(mvs[i][3]),'yellow',17);
-        line(I(mvs[i][0]),I(mvs[i][1]),I(mvs[i][2]),I(mvs[i][3]),co);
+        if(!blindfolded||i==mv-1) line(I(mvs[i][0]),I(mvs[i][1]),I(mvs[i][2]),I(mvs[i][3]),co);
     }
     if(theend) co=o?co1:co0;
-    if(!gameover) {
+    if(!gameover&&!blindfolded) {
         for(var i=0;i<JN.length;i++) {
             dash(I(JN[i][0]),I(JN[i][1]),I(JN[i][2]),I(JN[i][3]),co);
         }
@@ -201,7 +200,7 @@ function fly(T,C,a,b,ld,f=false) {//搜索
         }
         if(chk) {
             if(wf!=f) {
-                // no8("this is check:"+a+" "+b+"->"+c+" "+d);
+                // console.log("this is check:"+a+" "+b+"->"+c+" "+d);
                 // if(JL[ste].length>0) {
                 //     if(JL[0]==[a,b,c,d]) debugger;
 
@@ -320,7 +319,7 @@ function cross(x,y) {
     if(!o) xx0=x,xy0=y,xz0=J(x,y);
     else xx1=x,xy1=y,xz1=J(x,y);
     if(!eMode) {
-        addText("X("+choi+","+choj+") ");
+        addText("X("+x+","+y+") ");
         //playSound(".mep4");
     }
     fiachx();
@@ -370,6 +369,7 @@ function update() {
                     if(!gameover) {
                         if(mode==1) setTimeout(A2Move,30);
                         if(mode==2) setTimeout(mctsMove,30);
+                        if(mode==3) setTimeout(B1Move,30);
                     }
                 }
                 else choi=i,choj=j;
@@ -508,7 +508,7 @@ function mctsMove() {
     let fullyExpanded=[false,false];
     let end=[false,false];
     [oo,oj0,oj1,oxx0,oxy0,oxz0,oxx1,oxy1,oxz1,oC0,oC1,oT0,oT1,oJN,oJL,odeg]=[o,j0,j1,xx0,xy0,xz0,xx1,xy1,xz1,C0,C1,T0,T1,JN,JL,deg];
-    let TT=700;
+    let TT=700;//*60;
     let optA=true;
     let mvlist=[null,null];
     function superno8(w,c=0) {
@@ -689,6 +689,67 @@ function mctsMove() {
     }
     // no8(dfn);
 }
+function B1Move() {
+    t1=Date.now();
+    if(theend) {
+        A0Move();
+        return;
+    }
+    let A = new Array;
+    A.push(o);
+    A.push(j0);
+    A.push(j1);
+    A.push(xx0);
+    A.push(xy0);
+    A.push(xz0);
+    A.push(xx1);
+    A.push(xy1);
+    A.push(xz1);
+    A.push(banShape);
+    for(let i=0;i<25;++i) A.push(C0[i]);
+    for(let i=0;i<25;++i) A.push(C1[i]);
+    for(let i=0;i<25;++i) for(let j=0;j<8;++j) A.push(Number(T0[i][j]));
+    for(let i=0;i<25;++i) for(let j=0;j<8;++j) A.push(Number(T1[i][j]));
+    A.push(JN.length);
+    for(let i=0;i<JN.length;++i) {
+        // for(let j=0;j<4;++j) if(JN[i][0]+dx[j]==JN[i][2]&&JN[i][1]+dy[j]==JN[i][3]) A.push(EID[J(JN[i][0],JN[i][1])][j]);
+        A.push(JN[i][0]);
+        A.push(JN[i][1]);
+        A.push(JN[i][2]);
+        A.push(JN[i][3]);
+    }
+    // for(let i=0;i<72;++i) {
+    //     A.push(JL[i].length);
+    //     for(let j=0;j<JL[i].length;++j) {
+    //         for(let k=0;k<8;++k)
+    //         if(JL[i][j][0]+dx[k]==JL[i][j][2]&&JL[i][j][1]+dy[k]==JL[i][j][3]) {
+    //             if(k<4) A.push(EID[J(JL[i][j][0],JL[i][j][1])][k]);
+    //             else A.push(EID[J(JL[i][j][2],JL[i][j][3])][k-4]);
+    //             break;
+    //         }
+    //         // A.push(JL[i][j][0]);
+    //         // A.push(JL[i][j][1]);
+    //         // A.push(JL[i][j][2]);
+    //         // A.push(JL[i][j][3]);
+    //     }
+    // }
+    for(let i=0;i<25;++i) A.push(deg[i]);
+    arr=new Int8Array(A.length);
+    for(let i=0;i<A.length;++i) arr[i]=A[i];
+    // console.log(arr);
+    const e = Module.ccall('mctsMove', 'number', ['array'], [arr]);
+    if(e<72) {
+        [a,b,c,d]=unpackE[e];
+        move(a,b,c,d);
+    }
+    else {
+        let t=e-72;
+        let b=t%5,a=(t-b)/5;
+        cross(a,b);
+        B1Move();
+    }
+    console.log("TI:",Date.now()-t1);
+}
 function ccli(e) {
     mx=e.offsetX;
     my=e.offsetY;
@@ -697,6 +758,9 @@ function ckey(e) {
     //no8(e.keyCode);
     if(e.keyCode==88) {
         cro=true;
+    }
+    if(e.keyCode==87) {
+        w=true;
     }
 }
 function clicked() {
@@ -731,8 +795,9 @@ function init() {
     mode=getQueryVariable("mode");
     draw=false;
     if(randint(1,2)==1) {
-        if(mode==1) A2Move();
-        if(mode==2) mctsMove();
+        if(mode==1) setTimeout(A2Move,30);
+        if(mode==2) setTimeout(mctsMove,30);
+        if(mode==3) setTimeout(B1Move,30);
     }
 }
 window.onload=() => {
@@ -764,6 +829,7 @@ window.onload=() => {
     C1=new Array(25);
     deg=new Array(25).fill(0);
     eMode=false;
+    blindfolded=false;
     init();
     setInterval(update,1000/fps);
     document.addEventListener('keydown',ckey);
@@ -777,44 +843,38 @@ function exportCanvasAsImage(fileName) {
     link.download = fileName+'.png';
     link.click();
 }
-function go() {
-    while(!theend) mctsMove();
+function test() {
+    move(2,3,3,2); move(1,2,2,2);
+    move(3,0,4,1); move(2,1,2,2);
+    move(3,2,4,1); move(1,1,2,1);
+    cross(1,2) ;
+    move(2,2,3,1); cross(3,1); move(1,3,2,2); 
+    move(4,0,4,1); move(0,2,1,3);
+    // move(0,2,1,1); move(0,1,0,2);
+    // move(0,1,1,1);
 }
-function loadTestData() {
-    move(1,2,2,2);
-    move(2,2,3,2);
-    move(2,1,2,2);
-    move(2,2,3,1);
-    move(1,1,2,1);
-    move(1,1,1,2);
-    move(0,1,1,2);
-    move(0,1,1,1);
-    // cross(4,4);
-    move(3,3,4,4);
-    move(3,1,4,2);
-    // move(1,0,2,0);
-    // move(3,1,4,1);
-    cross(4,4);
-    move(0,1,1,0);
+// 1. (1,2)-(2,2) (2,2)-(3,1)
+// 2. (2,2)-(2,3) (1,3)-(2,2)
+// 3. (1,3)-(2,3) (1,2)-(1,3)
+// 4. (0,3)-(1,2) X(0,3) (1,2)-(2,1)
+// 5. X(2,1) (2,2)-(3,3) (1,1)-(2,2)
+// 6. (2,4)-(3,3) (1,3)-(2,4)
+// 7. (1,4)-(2,4) (0,1)-(1,0)
+function test12() {
+    move(1,2,2,2); move(1,3,2,2);
+    move(2,1,2,2); move(1,1,2,2);
+    move(1,1,1,2); move(1,1,2,1);
+    move(1,1,2,0); cross(2,0); move(2,1,3,2);
+    move(2,2,3,2);// move(3,2,3,3);
+   // move(2,2,3,3);// move(1,2,2,3);
 }
-function loadTestDatb() {
-    move(1,2,2,2); move(2,2,3,2);
+function test13() {
+    move(2,2,3,1); move(1,2,2,2);
     move(1,1,2,2); move(2,2,2,3);
-    move(0,1,1,2); move(3,2,4,3);
-    move(0,1,1,0); move(1,0,1,1);
-    cross(4,4); move(2,0,3,1); move(0,3,1,2);
-}
-function test3() {
-    cross(0,4); move(1,2,2,2); cross(4,0); move(1,4,2,3);
-    move(0,2,0,3); move(2,3,2,4);
-    move(0,3,1,3); move(1,1,2,2);
-    move(0,1,0,2); move(0,1,1,2);
     move(1,0,2,1); move(1,2,1,3);
-    move(1,3,2,2); move(0,2,1,2);
-    move(1,3,2,4); move(0,0,1,1);
-    move(0,0,1,0); move(3,3,4,2);
-    move(2,0,3,1); move(1,0,1,1);
-    move(2,1,3,1);
+    cross(2,3); move(2,0,3,0); /*move(2,2,3,3);
+    move(2,1,3,2); move(2,4,3,3);
+    move(1,3,2,4);*/
 }
 
 
