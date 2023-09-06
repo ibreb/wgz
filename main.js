@@ -334,7 +334,7 @@ function update() {
     if(gameover) {
         if(!showresult) {
             playSound("game-end.webm");
-            setTimeout(alert(o?"后手胜":"先手胜"),1000);
+            setTimeout(function() {alert(o?"后手胜":"先手胜");}, 200);
             showresult=true;
         }
         return;
@@ -367,9 +367,10 @@ function update() {
                     move(a,b,c,d);
                     disp();
                     if(!gameover) {
-                        if(mode==1) setTimeout(A2Move,30);
-                        if(mode==2) setTimeout(mctsMove,30);
-                        if(mode==3) setTimeout(B1Move,30);
+                        if(mode==1) setTimeout((randint(0,2)>0?A1Move:A0Move),300);
+                        if(mode==2) setTimeout(A2Move,300);
+                        if(mode==3) setTimeout(mctsMove,30);
+                        if(mode==4) setTimeout(B1Move,30);
                     }
                 }
                 else choi=i,choj=j;
@@ -795,9 +796,10 @@ function init() {
     mode=getQueryVariable("mode");
     draw=false;
     if(randint(1,2)==1) {
-        if(mode==1) setTimeout(A2Move,30);
-        if(mode==2) setTimeout(mctsMove,30);
-        if(mode==3) setTimeout(B1Move,30);
+        if(mode==1) setTimeout((randint(0,2)>0?A1Move:A0Move),30);
+        if(mode==2) setTimeout(A2Move,30);
+        if(mode==3) setTimeout(mctsMove,30);
+        if(mode==4) setTimeout(B1Move,30);
     }
 }
 window.onload=() => {
@@ -834,6 +836,15 @@ window.onload=() => {
     setInterval(update,1000/fps);
     document.addEventListener('keydown',ckey);
     CA.addEventListener('click',ccli);
+}
+function selfPlay() {
+    while(!gameover) {
+        disp();
+        setTimeout(mctsMove,200);
+    }
+}
+function selfPlayB() {
+    setInterval(B1Move,1000);
 }
 function exportCanvasAsImage(fileName) {
     const img = new Image();
@@ -876,10 +887,20 @@ function test13() {
     move(2,1,3,2); move(2,4,3,3);
     move(1,3,2,4);*/
 }
-
-
-
-/*TODO:
-自定义图形
-按秩合并
-*/
+function test14() {
+    move(1,2,2,2); move(2,2,3,2);
+    move(2,1,2,2); move(1,3,2,2);
+    move(1,1,2,1); cross(1,1); move(1,3,2,4);
+    move(3,3,4,4); move(2,3,3,3);
+}
+function test15() {
+    move(1,2,2,2); move(2,3,3,2);
+    move(2,1,2,2); move(1,1,1,2);
+    move(1,1,2,1); move(1,2,2,3);
+    move(0,2,1,1); cross(1,2); move(1,1,2,2);
+    cross(2,3); move(2,2,3,2); move(3,1,3,2);
+    // move(2,2,3,1); move(1,0,2,0);
+    // move(1,3,2,2); move(0,2,1,3);
+    // move(2,0,3,1); move(1,1,2,0);
+    // move(2,1,3,1);
+}
