@@ -2,60 +2,85 @@
 <html>
 <meta charset="UTF-8">
 <head>
-  <title>WGZ规则</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>WGZ棋</title>
+  <link rel="stylesheet" href="css/rule.css" />
 </head>
 <body>
   <main id="main">
-    <h1>WGZ棋规则（2019版）</h1>
-    <p>WGZ棋的棋盘是5*5的点阵，其棋子是不同颜色线段。先手为红，后手为蓝。双方轮流在棋盘上添加自己颜色的线段。</p>
-    <img src="0.png" height="150"></img>
-    <img src="1.png" height="150"></img>
-    <img src="g1.png" height="150"></img>
+    <h1>规则</h1>
+    <p>WGZ棋的棋盘是5*5的点阵，其棋子是不同颜色线段。先手为红，后手为蓝。双方轮流在棋盘上添加自己颜色的线段。率先用一部分己方线段围成合规图形者胜。</p>
+    <p>如果有一方无棋可下，则为平局。（实际几乎不可能）</p>
+    <figure>
+      <img src="images/board.png" height="150"></img>
+      <figcaption>棋盘</figcaption>
+    </figure>
+    <figure>
+      <img src="images/allmoves.png" height="150"></img>
+      <figcaption>所有合规线段</figcaption>
+    </figure>
+    <figure>
+      <img src="images/samplematch.png" height="150"></img>
+      <figcaption>对局示例</figcaption>
+    </figure>
+    <!-- <img src="images/1.png" height="150"></img>
+    <img src="images/g1.png" height="150"></img> -->
     <p>
-      合规线段要求如下：
+      <h3>合规线段要求</h3>
       <ol>
-        <li>由一个点连到上、下、左、右、左上、右上、左下、右下最近的点之一（如果存在）</li>
+        <li>连接两相邻点，即由一个点连到上、下、左、右、左上、右上、左下、右下最近的点之一（如果存在）</li>
         <li>不能与已有线段重合</li>
-        <li>端点没有被叉（详见后文）</li>
+        <!-- <li>端点没有被叉（详见后文）</li> -->
       </ol>
     </p>
-    <p>胜利的目标是围成一个合规图形</p>
 
     <p>
-      合规图形要求如下:
+      <h3>合规图形要求</h3>
       <ol>
-        <li>端点为点阵中点</li>
         <li>为不自交的封闭图形</li>
+        <li>端点为棋盘上的点</li>
         <li>不是三角形</li>
-        <li>没有被禁用（详见后文）</li>
+        <!-- <li>没有被禁用（详见后文）</li> -->
       </ol>
-    <img src="t1.png" height="150"></img>
+    <figure>
+      <img src="images/shapes.png" height="150"></img>
+      <figcaption>合规图形示例</figcaption>
+    </figure>
+    <figure>
+      <img src="images/check.png" height="150"></img>
+      <figcaption>将军示例</figcaption>
+    </figure>
 
-    <p>再添加一条己方合规线段就能构成合规图形的状态为“将军”，不能连将超过2次。（取胜不算将军）</p>
-    <p>将军会用虚线显示。</p>
-    <img src="t6.png" height="150"></img>
-    <img src="t7.png" height="150"></img>
-    <img src="t8.png" height="150"></img>
+    <h3>将军</h3>
 
-    <p>每局双方各有一次“叉点”机会，可以在某回合添加线段前叉掉一个点。（叉掉的点在之后双方不能连线段，但不影响已有线段。合规图形也可以包含被叉的点）</p>
-    <img src="t2.png" height="150"></img>
-    <img src="t3.png" height="150"></img>
-    <img src="t4.png" height="150"></img>
-    <img src="t5.png" height="150"></img>
-    <p>为了平衡先手优势，后手可以禁用先手一个图形。与之全等的图形都为禁用。</p>
+    <p>再添加一条己方合规线段就能构成合规图形的状态为“将军”。</p>
+    <p> 每人连续将军不能超过2次。（取胜不算将军）</p>
+    <p>将军时，棋盘上会显示虚线提示。</p>
+    <!-- <img src="images/t6.png" height="150"></img>
+    <img src="images/t7.png" height="150"></img>
+    <img src="images/t8.png" height="150"></img> -->
 
-    <p>当能取胜时，要下取胜的线段。</p>
+    <h3>叉点</h3>
 
-    <p>如果有一方无棋可下，则双方都是赢家。（实际几乎不可能）</p>
+    <p>每局双方各有一次“叉点”机会，可以在某回合添加线段前叉掉一个点。（叉掉的点在之后双方不能连线段，但不影响已有线段。）</p>
+    <!-- <img src="images/t2.png" height="150"></img>
+    <img src="images/t3.png" height="150"></img>
+    <img src="images/t4.png" height="150"></img>
+    <img src="images/t5.png" height="150"></img> -->
+
+    <h3>禁用图形</h3>
+
+    <p>为了平衡先手优势，后手可以禁用先手一个图形。与之全等的图形都为禁用。（不为先手的合规图形）</p>
     
-    <b>操作说明：</b>
+    <h3>操作说明：</h3>
 
     <p>对局中，点击一个点可以选择，再次点击取消选择。依次选择两个点可以下线段。</p>
     
     <p>想下某条线段却下不了，可能是这一步是将军，而连将次数用完了。</p>
     
+    <p>当能取胜时，要下取胜的线段。</p>
+
     <p>叉点可以选择点后按键盘X键，或按叉点按钮。</p>
+    <center><button onclick="window.location.href='/'">确定</button></center>
   </main>
 </body>
 </html>

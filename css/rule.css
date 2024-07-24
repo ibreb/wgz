@@ -1,0 +1,54 @@
+body {
+  font-family: Consolas, sans-serif;
+/*  background-color: #f1f1f1;*/
+  background-color: #222;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  margin: 0;
+  font-size: 30px;
+  text-align: center;
+}
+
+main ul li a {
+  text-decoration: none;
+}
+
+main {
+  max-width: 800px;
+  margin: 20px auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+p, pre {
+  font-family: Consolas, sans-serif;
+  font-size: 17px;
+}
+
+figure {
+  display: inline-block;
+}
+figcaption {
+  text-align: center;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 20px;
+  margin: 10px;
+  width: 200px;
+  border: none;
+  background-color: #ddd;
+  color: black;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #bbb;
+}

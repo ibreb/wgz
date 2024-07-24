@@ -1,0 +1,227 @@
+.big-button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 20px;
+  border-radius: 20px;
+  border: 2px solid #909090;
+  background-color: #909090;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+}
+.big-button:active {
+  background-color: #303030;
+}
+#textArea {
+  width: 300px;
+  height: 640px;
+  border: 1px solid #555;
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease-in-out;
+  font-size: 24px;
+  float: right;
+}
+.export-container {
+  float: right;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+.green-button {
+  padding: 5px 10px;
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.export-dropdown {
+  display: none;
+  position: absolute;
+  background-color: #333;
+  min-width: 160px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.export-dropdown a {
+  color: #fff;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.export-dropdown a:hover {
+  background-color: #555;
+}
+
+#importTextbox {
+  display: none;
+  position: absolute;
+  z-index: 2;
+  background-color: white;
+  padding: 10px;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#importTextbox input[type="text"] {
+  width: 200px;
+  padding: 5px;
+  margin-right: 10px;
+}
+
+#importTextbox button {
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}   
+/*#textArea:hover {
+    background-color: #444;
+}*/
+#rightPanel {
+  float: right;
+}
+.bar {
+  width: 298px;
+  height: 20px;
+  border: 1px solid #FFF;
+  background-color: #5050e0;
+/*    border-radius: 10px;*/
+  overflow: hidden;
+/*  float: right;*/
+  display: none;
+}
+.progress {
+  height: 100%;
+  background-color: #e05050;
+/*    border-radius: 10px;*/
+  transition: width 1s ease;
+}
+
+
+
+
+#movesTable {
+  width: 300px;
+  border: 1px solid #555;
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-size: 18px;
+/*  float: right;*/
+}
+
+#movesTable th, #movesTable td {
+  width: 100px;
+  padding: 2px;
+  border: 1px solid #555;
+  text-align: center;
+}
+
+#movesTable th {
+  background-color: #444;
+}
+
+#movesTable td:first-child, #movesTable th:first-child {
+  width: 50px; /* 调小第一列宽度 */
+}
+
+.highlight {
+  background-color: #555;
+}
+
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 200px;
+  transform: translate(-50%, -50%);
+/*  background: white;*/
+  color: black;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  text-align: center;
+  background-color: #777;
+}
+.modal h2 {
+  margin-top: 0;
+}
+.modal button {
+  margin: 10px;
+  padding: 10px 20px;
+  border: none;
+  background: #00AA00;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.modal button.close {
+  background: #dc3545;
+}
+
+body {
+  background-color: #222;
+}
+
+
+
+#panel {
+  background-color: #333;
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 600px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+#panel button {
+  background-color: #444;
+  border: none;
+  padding: 15px;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: background-color 0.3s;
+}
+#panel button:hover {
+  background-color: #555;
+}
+#panel button i {
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+#panel .tooltip {
+  visibility: hidden;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -50px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+#panel button:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}

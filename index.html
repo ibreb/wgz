@@ -2,85 +2,121 @@
 <html>
 <meta charset="UTF-8">
 <head>
-  <title>WGZ棋</title>
-  <style>
-    body {
-      font-size: 17px;
-    }
-    #menu select {
-      font-size: 17px;
-    }
-    #menu {
-      width: 300px;
-      text-align: center;
-      margin: 200px auto;
-    }
-
-    #menu h1 {
-      font-size: 64px;
-      margin-bottom: 30px;
-/*      font-family: Quicksand-Bold,serif;*/
-/*      font-size: 72px;*/
-/*      margin-top: 0;*/
-/*      margin-bottom: 5px;*/
-/*      text-align: center;*/
-      
-      text-shadow: 2px 2px teal;
-/*      transition: all .2s ease-in-out;*/
-/*      position: relative;*/
-/*      display: inline-block;*/
-    }
-
-    /*#menu button {
-      padding: 10px 20px;
-      font-size: 24px;
-      margin: 10px;
-    }*/
-    button {
-      padding: 10px 20px;
-      font-size: 20px;
-      margin: 10px;
-      width: 100px;
-      border: none;
-      background-color: #ddd;
-      color: black;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
-
-    button:hover {
-      background-color: #bbb;
-    }
-    body {
-      background-color: #222;
-      color: white;
-    }
-  </style>
+    <title>WGZ棋</title>
+    <link rel="stylesheet" href="css/index.css" />
 </head>
 <body>
-  <div id="menu">
-    <h1>WGZ棋</h1>
-    禁用图形
-    <select id="banShape" name="ban">
-        <option value="1">小平行四边形</option>
-        <option value="2">小正方形</option>
-        <option value="3">大正方形</option>
-        <option value="0">不禁用</option>
-    </select><br>
+    <div id="menu">
+        <h1>WGZ棋</h1>
+        <!-- 禁用图形
+        <select id="banShape" name="ban">
+            <option value="1">小平四</option>
+            <option value="2">小正方</option>
+            <option value="3">大正方</option>
+            <option value="0">不禁用</option>
+        </select><br> -->
+        <h2>选择禁用图形</h2>
+        <div class="shapes">
+            <div class="shape" data-shape="0">不禁用</div>
+            <div class="shape selected" data-shape="1"><img src="images/shape1.png" alt="小平四"></div>
+            <div class="shape" data-shape="2"><img src="images/shape2.png" alt="小正方"></div>
+            <div class="shape" data-shape="3"><img src="images/shape3.png" alt="大正方"></div>
+        </div>
 
-    对局模式
-    <select id="opp" name="mode">
-        <option value="0">单机双人对局</option>
-        <option value="1">人机对局一级</option>
-        <option value="2">人机对局二级</option>
-        <option value="3">人机对局三级</option>
-        <option value="4">人机对局四级</option>
-    </select><br>
+        <!-- 对局模式
+        <select id="opp" name="mode">
+            <option value="0">单机双人对局</option>
+            <option value="1">人机对局初级</option>
+            <option value="2">人机对局中级</option>
+            <option value="3">人机对局高级</option>
+            <option value="4">人机对局大师</option>
+        </select><br> -->
 
-    <button onclick="window.location.href='wgz.html?ban='+document.getElementById('banShape').value+'&mode='+document.getElementById('opp').value">开始</button>
-    <br>
-    <button onclick="window.location.href='rule.html'">规则</button>
-  </div>
+        <!-- <button onclick="">开始</button> -->
+        <!-- <br> -->
+        <button onclick="go(0)">双人对局</button><br>
+        <button onclick="showBots()">人机对局</button><br>
+        <div class="modal" id="bots-modal">
+            <h2>选择难度</h2>
+            <div class="option-group">
+                <div class="option" data-option="1" onclick="go(1)">初级</div>
+                <div class="option" data-option="2" onclick="go(2)">中级</div>
+                <div class="option" data-option="3" onclick="go(3)">高级</div>
+                <div class="option" data-option="4" onclick="go(4)">大师</div>
+            </div>
+            <!-- <button onclick="go(selectedOption)">开始</button> -->
+            <button onclick="closeBots()">关闭</button>
+        </div>
+<!--         <button onclick="go(2)">人机对局中级</button><br>
+        <button onclick="go(3)">人机对局高级</button><br>
+        <button onclick="go(4)">人机对局大师</button><br> -->
+        <button onclick="window.location.href='rule.html'">规则</button><br>
+        <!-- <button onclick="showSettings()">设置</button> -->
+        <div class="modal" id="settings-modal">
+            <h2>设置</h2>
+            <div class="settings">
+            <label><input type="checkbox" id="sound" checked> 音效</label>
+            <label><input type="checkbox" id="blind"> 盲棋模式</label>
+            </div>
+            <button onclick="saveSettings()">保存</button>
+            <button onclick="closeSettings()">关闭</button>
+        </div>
+    </div>
+    <script>
+        let selectedShape = 1;
+
+        document.querySelectorAll('.shape').forEach(shape => {
+          shape.addEventListener('click', () => {
+            document.querySelectorAll('.shape').forEach(c => c.classList.remove('selected'));
+            shape.classList.add('selected');
+            selectedShape = shape.getAttribute('data-shape');
+          });
+        });
+        // document.querySelectorAll('.option').forEach(option => {
+        //   option.addEventListener('click', () => {
+        //     document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+        //     option.classList.add('selected');
+        //     selectedOption = option.getAttribute('data-option');
+        //   });
+        // });
+
+        function startGame() {
+          if (selectedShape) {
+            const selectedDifficulty = document.querySelector('input[name="difficulty"]:checked').value;
+            alert('Selected shape: ' + selectedShape + '\nSelected difficulty: ' + selectedDifficulty);
+            // Continue with starting the game logic
+          } else {
+            alert('Please select a shape.');
+          }
+        }
+
+        function showSettings() {
+          document.getElementById('settings-modal').classList.add('show');
+        }
+
+        function closeSettings() {
+          document.getElementById('settings-modal').classList.remove('show');
+        }
+        function showBots() {
+          document.getElementById('bots-modal').classList.add('show');
+        }
+        function closeBots() {
+          document.getElementById('bots-modal').classList.remove('show');
+        }
+
+        function saveSettings() {
+          const sound = document.getElementById('sound').checked;
+          const music = document.getElementById('blind').checked;
+          alert('Settings saved:\nSound: ' + sound + '\nMusic: ' + music + '\nNotifications: ' + notifications);
+          closeSettings();
+        }
+        function go(mode) {
+            if(mode==4&&selectedShape!=1) {
+                alert("大师目前只支持禁用小平四");
+                return;
+            }
+            window.location.href='wgz.html?ban='+selectedShape+'&mode='+mode;
+        }
+    </script>
 </body>
 </html>

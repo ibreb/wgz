@@ -3,37 +3,101 @@
 <meta charset="UTF-8">
 <head>
 	<title>WGZ棋</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+	<link rel="stylesheet" href="css/wgz.css" />
 </head>
 <body>
-	<style>
-		.big-button {
-			display: inline-block;
-			padding: 10px 20px;
-			font-size: 20px;
-			border-radius: 20px;
-			background-color: #909090;
-			color: white;
-			text-align: center;
-			text-decoration: none;
-		}
-		.big-button:active {
-			background-color: #303030;
-		}
-		#textArea {
-			width: 300px;
-			height: 800px;
-			border: 1px solid #ccc;
-			padding: 10px;
-		}
-  	</style>
-	<canvas id="wgzcanvas" width="640" height="640" style="border:4px solid #007777;"></canvas>
-	<script src="mc.js"></script>
-	<script type="text/javascript" src="main.js"></script>
+	<canvas id="wgzcanvas" width="640" height="640"></canvas>
+
+	<script src="js/utils.js"></script>
+	<script src="js/ui.js"></script>
+	<script src="js/game.js"></script>
+	<script src="js/ai.js"></script>
+	<script src="js/main.js"></script>
+	<script src="js/mc.js"></script>
+
+	<div class="modal" id="gameOverModal">
+        <h2 id="result"></h2>
+        <!-- <button onclick="closeModal();init()">重新开始</button> -->
+        <button onclick="closeModal()">确定</button>
+    </div>
+
 	<button id="crobutton" class="big-button" onclick="clicked();cro=true;">叉点</button>
-<!-- 	<button id="randombutton" class="big-button" onclick="A2Move();">quickMove</button>
-	<button id="randombutton" class="big-button" onclick="mctsMove();">mctsMove</button> -->
-	<div id="textArea"></div>
-	<script>
-  	</script>
+	<div id="rightPanel">
+		<div class="bar" id="bar1">
+			<div class="progress" id="eval1"></div>
+		</div>
+		<table id="movesTable">
+	        <tbody></tbody>
+	    </table>
+	</div>
+    <!-- <div class="export-container">
+	    <button class="green-button" onclick="toggleExportDropdown()">导出对局</button>
+	    <div id="exportDropdown" class="export-dropdown">
+	        <a href="#" onclick="exportText('option1')">导出图片</a>
+	        <a href="#" onclick="exportText('option2')">复制编码串</a>
+	    </div>
+	</div> -->
+<!-- 	<button class="green-button" onclick="init()">新对局</button>
+	<button class="green-button" onclick="start()">从当前局面开始对局</button>
+	<button class="green-button" onclick="start()">从当前局面开始对局</button> -->
+	<div id="panel">
+        <button class="button" onclick="init()">
+            <i class="fas fa-redo"></i>
+            <div class="tooltip">新对局</div>
+        </button>
+        <button class="button" onclick="leftKey()">
+            <i class="fas fa-chevron-left"></i>
+            <div class="tooltip">上一步</div>
+        </button>
+        <button class="button" onclick="rightKey()">
+            <i class="fas fa-chevron-right"></i>
+            <div class="tooltip">下一步</div>
+        </button>
+        <!-- <button class="button">
+            <i class="fas fa-eye"></i>
+            <div class="tooltip">显示</div>
+        </button>
+        <button class="button">
+            <i class="fas fa-eye-slash"></i>
+            <div class="tooltip">隐藏</div>
+        </button> -->
+        <button class="button" onclick="showImportTextbox()">
+            <i class="fas fa-file-import"></i>
+            <div class="tooltip">导入对局</div>
+        </button>
+        <div id="importTextbox">
+	        <input type="text" id="importInput" placeholder="输入编码串">
+	        <button onclick="confirmImport()">确认</button>
+	    </div>
+        <!-- <div class="export-container"> -->
+	    <button class="button" onclick="toggleExportDropdown()">
+            <i class="fas fa-file-export"></i>
+            <div class="tooltip">导出对局</div>
+        </button>
+	    <div id="exportDropdown" class="export-dropdown">
+	        <a href="#" onclick="exportText('option1')">导出图片</a>
+	        <a href="#" onclick="exportText('option2')">复制编码串</a>
+	    </div>
+		<!-- </div> -->
+        
+        <button class="button" onclick="start()" style="display: none;">
+            <i class="fas fa-play"></i>
+            <div class="tooltip">从当前局面开始对局</div>
+        </button>
+        <button class="button" onclick="B1Move()" style="display: none;">
+            <i class="fas fa-laptop"></i>
+            <div class="tooltip">引擎走棋</div>
+        </button>
+        <a href="../">
+	        <button class="button">
+	            <i class="fas fa-home"></i>
+	            <div class="tooltip">返回主菜单</div>
+	        </button>
+	    </a>
+    </div>
+<!-- 	<div class="bar" id="bar2">
+	  <div class="progress" id="eval2"></div>
+	</div> -->
 </body>
 </html>
