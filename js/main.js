@@ -95,15 +95,15 @@ function init(fl=true) {
     draw=false;
     if(autoShowBar) updateBar(50,"eval1");
     if(fl&&randint(1,2)==1) {
-        if(mode==1) setTimeout(A6Move,30);
-        if(mode==2) setTimeout(A2Move,30);
-        if(mode==3) setTimeout(mctsMove,30);
+        if(mode==1) setTimeout(A6Move,75);
+        if(mode==2) setTimeout(A2Move,75);
+        if(mode==3) setTimeout(mctsMove,75);
         if(mode==4) {
             let seed = randint(1,100);
-            if(seed<=60) setTimeout(()=>load(["21","31","42","44"][randint(0,3)]),30);
-            else if(seed<=76) setTimeout(()=>load(["25","37","38","48"][randint(0,3)]),30);
-            else if(seed<=92) setTimeout(()=>load(["26","37","41","43"][randint(0,3)]),30);
-            else setTimeout(()=>load(["20","22","39","54","24","30","47","58"][randint(0,7)]),30);
+            if(seed<=60) setTimeout(()=>load(["21","31","42","44"][randint(0,3)]),75);
+            else if(seed<=76) setTimeout(()=>load(["25","37","38","48"][randint(0,3)]),75);
+            else if(seed<=92) setTimeout(()=>load(["26","37","41","43"][randint(0,3)]),75);
+            else setTimeout(()=>load(["20","22","39","54","24","30","47","58"][randint(0,7)]),75);
             // setTimeout(B1Move,200);
         }
     }

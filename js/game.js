@@ -211,6 +211,7 @@ function cross(x,y) {
     if(!theend&&checkDraw()) drawGame();
 }
 function checkDraw() {
+    if(gameString.length<10) return false;
     for(let i=0;i<n;i++) for(let j=0;j<n;j++) {
         for(let d=0;d<4;d++) {
             let x=i+dx[d],y=j+dy[d];
@@ -218,7 +219,5 @@ function checkDraw() {
             if(valid(i,j,x,y)) return false;
         }
     }
-    console.log("?????");
-    console.log(n);
     return true;
 }
