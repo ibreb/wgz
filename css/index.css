@@ -8,6 +8,7 @@ body {
   width: 800px;
   text-align: center;
   margin: 0px auto;
+  align-items: center;
 }
 
 #menu h1 {
@@ -55,7 +56,7 @@ body {
   display: none;
   position: fixed;
   width: 400px;
-  top: 50%;
+  top: 450px;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #333;

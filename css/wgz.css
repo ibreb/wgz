@@ -196,8 +196,11 @@ body {
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  align-items: center;
   transition: background-color 0.3s;
+  position: relative;
+  display: inline-block;
+  padding: 10px;
+  font-size: 16px;
 }
 #panel button:hover {
   background-color: #555;
@@ -208,18 +211,19 @@ body {
 }
 #panel .tooltip {
   visibility: hidden;
-  background-color: black;
+  background-color: #555;
   color: #fff;
   text-align: center;
   border-radius: 5px;
   padding: 5px;
   position: absolute;
-  z-index: 1;
-  bottom: 125%;
+  bottom: 100%;
   left: 50%;
-  margin-left: -50px;
+  margin-left: -60px;
   opacity: 0;
   transition: opacity 0.3s;
+  width: 120px;
+  z-index: 1;
 }
 #panel button:hover .tooltip {
   visibility: visible;

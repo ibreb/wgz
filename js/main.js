@@ -108,7 +108,7 @@ function init(fl=true) {
         }
     }
     if(mode==512) {
-        setTimeout(()=>load("264337442220040519"),30);
+        setTimeout(()=>load(""),30);
         setTimeout(selfPlayC,50);
     }
     if(mode==513) {
