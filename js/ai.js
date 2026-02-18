@@ -339,6 +339,10 @@ function B1Move() {
         A0Move();
         return;
     }
+    if(!moduleReady) {
+        setTimeout(B1Move,30);
+        return;
+    }
     const e = Module.ccall('mctsMove', 'number', ['string'], [gameString]);
     if(e<72) {
         [a,b,c,d]=unpackE[e];

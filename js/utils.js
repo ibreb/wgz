@@ -1,3 +1,16 @@
+var Module = typeof Module !== 'undefined' ? Module : {};
+var moduleReady = false;
+var prevOnRuntimeInitialized = Module.onRuntimeInitialized;
+Module.onRuntimeInitialized = () => {
+    moduleReady = true;
+    if (typeof prevOnRuntimeInitialized === 'function') {
+        prevOnRuntimeInitialized();
+    }
+};
+if (Module.calledRun) {
+    moduleReady = true;
+}
+
 function randint(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -128,6 +141,10 @@ function closeModal() {
 
 
 function showMove() {
+    if(!moduleReady) {
+        setTimeout(showMove,30);
+        return;
+    }
     const e = Module.ccall('getPi', 'string', ['string'], [gameString]);
     colors=new Array(97);
     for(let i=0;i<97;++i) colors[i]=(e.charCodeAt(i));
@@ -138,6 +155,10 @@ function showMove() {
 }
 function showBar() {
     if(theend) return;
+    if(!moduleReady) {
+        setTimeout(showBar,30);
+        return;
+    }
     const e = Module.ccall('getPi', 'string', ['string'], [gameString]);
     updateBar(o?100-e.charCodeAt(97):e.charCodeAt(97),"eval1");
     // console.log(e.charCodeAt(98));

@@ -13,6 +13,17 @@ function I(x) {
     return st+x*sp;
 }
 
+function recMid(x,y,sz = sp, co='green') {
+    CC.strokeStyle = co;
+    CC.lineWidth = 10;
+    borderWidth = 10;
+    boxSize = 50;
+    CC.save();
+    CC.strokeRect(x-sz/2, y-sz/2, sz, sz);
+    // CC.clearRect(x + borderWidth / 2, y + borderWidth / 2, boxSize - borderWidth, boxSize - borderWidth);
+    CC.restore();
+}
+
 function rec(x,y,a,b,co) {
     CC.fillStyle=co;
     CC.fillRect(x,y,a,b);
@@ -50,6 +61,8 @@ function dash(a,b,x,y,co,w=8) {
 }
 function disp() {
     rec(0,0,640,640,'#E0E0E0');
+    // recMid(320,320);
+    // recMid(320,320,3*sp,'green');
     // rec(0,0,640,640,'#dcdcdc');
 
 
@@ -100,7 +113,7 @@ function disp() {
         line(I(xx1)-12,I(xy1)-12,I(xx1)+12,I(xy1)+12,co1,5);
         line(I(xx1)+12,I(xy1)-12,I(xx1)-12,I(xy1)+12,co1,5);
     }
-    if(!gameover) {
+    if(!gameover&&false) {
         CC.font='25px Arial';
         var st="【先手】剩余连将次数:"+j0.toString();
         CC.fillStyle=co0;

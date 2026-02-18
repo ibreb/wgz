@@ -184,18 +184,22 @@ window.onload=() => {
         }
         button.addEventListener('click', hide);
         document.body.appendChild(button);
-        // button = document.createElement('button');
-        // button.textContent = '走棋';
-        // button.addEventListener('click', B1Move);
-        // document.body.appendChild(button);
+        button = document.createElement('button');
+        button.textContent = '走棋';
+        button.addEventListener('click', B1Move);
+        document.body.appendChild(button);
         // button = document.createElement('button');
         // button.textContent = '开始';
         // button.addEventListener('click', init);
         // document.body.appendChild(button);
-        // button = document.createElement('button');
-        // button.textContent = '重开';
-        // button.addEventListener('click', start);
-        // document.body.appendChild(button);
+        button = document.createElement('button');
+        button.textContent = '重开';
+        button.addEventListener('click', start);
+        document.body.appendChild(button);
+        button = document.createElement('button');
+        button.textContent = '卡罗';
+        button.addEventListener('click', mctsMove);
+        document.body.appendChild(button);
     }
     init();
     setInterval(update,1000/fps);
