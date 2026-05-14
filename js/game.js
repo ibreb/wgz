@@ -193,7 +193,7 @@ function move(a,b,c,d) {
     ++deg[u],++deg[v];
     findAllChecks();
     if(autoShowBar) showBar();
-    if(!theend&&checkDraw()) drawGame();
+    if(!theend&&checkDraw()&&!eMode) drawGame();
 }
 function cross(x,y) {
     if(!o) xx0=x,xy0=y,xz0=J(x,y),!eMode&&(croMv0=mv);
@@ -208,7 +208,7 @@ function cross(x,y) {
         if(J(JN[i][0],JN[i][1])==xz0||J(JN[i][0],JN[i][1])==xz1
         ||J(JN[i][2],JN[i][3])==xz0||J(JN[i][2],JN[i][3])==xz1) JN.splice(i,1);
     }
-    if(!theend&&checkDraw()) drawGame();
+    if(!theend&&checkDraw()&&!eMode) drawGame();
 }
 function checkDraw() {
     if(gameString.length<10) return false;
