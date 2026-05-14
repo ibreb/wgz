@@ -27,30 +27,32 @@ function update() {
         cro=false;
     }
     if(mx!=0) {
-        for(var i=0;i<n;i++) for(var j=0;j<n;j++)
-        if(dist(I(i),I(j),mx,my)<40) {
-            if(choi>=0) {
-                var a=choi,b=choj,c=i,d=j,t;
-                if(a>c||a==c&&b>d) t=c,c=a,a=t,t=d,d=b,b=t;
-                if(a==c&&b==d) choi=choj=-1;
-                else if(Math.abs(c-a)<=1&&Math.abs(d-b)<=1) {
-                    choi=choj=-1;
-                    if(!valid(a,b,c,d)) {
-                        playSound("illegal.webm");
-                        continue;
+        if(!(mode==4 && b1Pending)) {
+            for(var i=0;i<n;i++) for(var j=0;j<n;j++)
+            if(dist(I(i),I(j),mx,my)<40) {
+                if(choi>=0) {
+                    var a=choi,b=choj,c=i,d=j,t;
+                    if(a>c||a==c&&b>d) t=c,c=a,a=t,t=d,d=b,b=t;
+                    if(a==c&&b==d) choi=choj=-1;
+                    else if(Math.abs(c-a)<=1&&Math.abs(d-b)<=1) {
+                        choi=choj=-1;
+                        if(!valid(a,b,c,d)) {
+                            playSound("illegal.webm");
+                            continue;
+                        }
+                        move(a,b,c,d);
+                        disp();
+                        if(!gameover) {
+                            if(mode==1) setTimeout(A6Move,300);
+                            if(mode==2) setTimeout(A2Move,300);
+                            if(mode==3) setTimeout(mctsMove,30);
+                            if(mode==4) { clearTimeout(b1Timer); b1Timer = setTimeout(B1Move,30); b1Pending = true; }
+                        }
                     }
-                    move(a,b,c,d);
-                    disp();
-                    if(!gameover) {
-                        if(mode==1) setTimeout(A6Move,300);
-                        if(mode==2) setTimeout(A2Move,300);
-                        if(mode==3) setTimeout(mctsMove,30);
-                        if(mode==4) setTimeout(B1Move,30);
-                    }
+                    else choi=i,choj=j;
                 }
                 else choi=i,choj=j;
             }
-            else choi=i,choj=j;
         }
         mx=my=0;
     }
@@ -93,6 +95,14 @@ function init(fl=true) {
     DIs=new Array(80);
     banShape=getQueryVariable("ban");
     draw=false;
+    b1RetryCount = 0;
+    b1Pending = false;
+    clearTimeout(b1Timer); b1Timer = null;
+    if(mode==4 && !moduleReady) {
+        document.getElementById('statusMsg').style.display = 'block';
+        document.getElementById('statusMsg').innerText = '正在加载大师引擎，请稍候...';
+        document.getElementById('statusMsg').className = 'status-loading';
+    }
     if(autoShowBar) updateBar(50,"eval1");
     if(fl&&randint(1,2)==1) {
         if(mode==1) setTimeout(A6Move,75);

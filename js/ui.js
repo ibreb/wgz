@@ -113,7 +113,7 @@ function disp() {
         line(I(xx1)-12,I(xy1)-12,I(xx1)+12,I(xy1)+12,co1,5);
         line(I(xx1)+12,I(xy1)-12,I(xx1)-12,I(xy1)+12,co1,5);
     }
-    if(!gameover&&false) {
+    if(!gameover) {
         CC.font='25px Arial';
         var st="【先手】剩余连将次数:"+j0.toString();
         CC.fillStyle=co0;

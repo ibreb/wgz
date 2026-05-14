@@ -333,6 +333,11 @@ function mctsMove() {
         mctsMove();
     }
 }
+var b1RetryCount = 0;
+var B1_ERROR_DELAY = 300;
+var b1Timer = null;
+var b1Pending = false;
+
 function B1Move() {
     t1=Date.now();
     if(theend) {
@@ -340,10 +345,20 @@ function B1Move() {
         return;
     }
     if(!moduleReady) {
-        setTimeout(B1Move,30);
+        ++b1RetryCount;
+        if(b1RetryCount > B1_ERROR_DELAY) {
+            document.getElementById('statusMsg').innerText = '大师引擎加载超时，请检查网络后刷新页面重试';
+            document.getElementById('statusMsg').className = 'status-error';
+        }
+        clearTimeout(b1Timer);
+        b1Timer = setTimeout(B1Move,30);
         return;
     }
+    b1RetryCount = 0;
+    document.getElementById('statusMsg').style.display = 'none';
+    eMode = true;
     const e = Module.ccall('mctsMove', 'number', ['string'], [gameString]);
+    eMode = false;
     if(e<72) {
         [a,b,c,d]=unpackE[e];
         move(a,b,c,d);
@@ -354,6 +369,8 @@ function B1Move() {
         cross(a,b);
         B1Move();
     }
+    b1Pending = false;
+    disp();
     console.log("time:",Date.now()-t1);
 }
 

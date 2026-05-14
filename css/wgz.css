@@ -229,3 +229,26 @@ body {
   visibility: visible;
   opacity: 1;
 }
+
+#statusMsg {
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  z-index: 100;
+  color: #fff;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.status-loading {
+  background-color: #2196F3;
+}
+
+.status-error {
+  background-color: #f44336;
+}
